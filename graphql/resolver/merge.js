@@ -1,6 +1,27 @@
 const Event = require("../../models/event");
 const User = require("../../models/user");
+
 const { dateToString } = require("../../helpers/date");
+
+const transformEvent = (event) => {
+	return {
+		...event._doc,
+		_id: event.id,
+		date: dateToString(event._doc.date),
+		creator: user.bind(this, event.creator),
+	};
+};
+
+const transformBooking = (booking) => {
+	return {
+		...booking._doc,
+		_id: booking._id,
+		user: user.bind(this, booking._doc.user),
+		event: singleEvent.bind(this, booking._doc.event),
+		createdAt: dateToString(booking._doc.createdAt),
+		updatedAt: dateToString(booking._doc.updatedAt),
+	};
+};
 
 // Just Return
 const user = (userId) => {
@@ -38,26 +59,6 @@ const singleEvent = async (eventId) => {
 	} catch (err) {
 		throw err;
 	}
-};
-
-const transformEvent = (event) => {
-	return {
-		...event._doc,
-		_id: event.id,
-		date: dateToString(event._doc.date),
-		creator: user.bind(this, event.creator),
-	};
-};
-
-const transformBooking = (booking) => {
-	return {
-		...booking._doc,
-		_id: booking._id,
-		user: user.bind(this, booking._doc.user),
-		event: singleEvent.bind(this, booking._doc.event),
-		createdAt: dateToString(booking._doc.createdAt),
-		updatedAt: dateToString(booking._doc.updatedAt),
-	};
 };
 
 exports.transformEvent = transformEvent;

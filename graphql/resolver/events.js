@@ -1,6 +1,7 @@
-const { transformEvent } = require("./merge.js");
-
 const Event = require("../../models/event");
+const User = require("../../models/user");
+
+const { transformEvent } = require("./merge.js");
 
 module.exports = {
 	events: async () => {
@@ -15,20 +16,24 @@ module.exports = {
 		}
 	},
 
-	createEvent: async (args) => {
+	createEvent: async (args, req) => {
+		if (!req.isAuth) {
+			throw new Error("Not Valid");
+		}
+
 		const event = new Event({
 			title: args.eventInput.title,
 			description: args.eventInput.description,
 			price: +args.eventInput.price,
 			date: dateToString(args.eventInput.date),
-			creator: "6038b5824d048e2d34f2ee9d",
+			creator: req.userId,
 		});
 		let createdEvent;
 
 		try {
 			const result = await event.save();
 			createdEvent = transformEvent(result);
-			const creator = await User.findById("6038b5824d048e2d34f2ee9d");
+			const creator = await User.findById(req.userId);
 
 			if (!creator) {
 				throw new Error("User not found.");
