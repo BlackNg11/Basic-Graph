@@ -8,7 +8,8 @@
     "start": "nodemon app.js",
     "server": "nodemon app.js",
     "client": "npm run start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "Je": "hello"
   },
   "keywords": [],
   "author": "",
