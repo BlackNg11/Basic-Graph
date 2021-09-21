@@ -9,7 +9,7 @@
     "server": "nodemon app.js",
     "client": "npm run start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "Je": "hello"
+    "git": "git add . && git commit -m 'update' && git push --all"
   },
   "keywords": [],
   "author": "",
